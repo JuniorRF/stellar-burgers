@@ -1,5 +1,6 @@
-import { useSelector } from '../../services/store';
-
+import { useAppSelector, useAppDispatch } from '@app-store';
+// import { IngredientsThunk, getIngredients } from '../../services/slices/ingredients';
+// import { IngredientsThunk, getIngredients } from '@slices/ingredients';
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
