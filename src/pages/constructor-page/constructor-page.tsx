@@ -1,5 +1,5 @@
-// import { useAppSelector } from '@app-store';
-// import {ingredientstIsLoading} from '@slices';
+import { useAppSelector } from '@app-store';
+import { ingredientstIsLoading } from '@slices';
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
@@ -8,8 +8,8 @@ import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
-  // const isIngredientsLoading = useAppSelector(ingredientstIsLoading);
-  const isIngredientsLoading = false;
+  const isIngredientsLoading = useAppSelector(ingredientstIsLoading);
+  // const isIngredientsLoading = false;
 
   return (
     <>

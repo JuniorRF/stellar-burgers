@@ -18,6 +18,7 @@ export const IngredientsThunk = createAsyncThunk(
   'ingredients/getAll',
   async () => {
     const response = await getIngredientsApi();
+    console.log(3, response);
     return response;
   }
 );
@@ -49,5 +50,5 @@ export const ingredientsSlice = createSlice({
 
 export const { getIngredients, ingredientstIsLoading } =
   ingredientsSlice.selectors;
-console.log(ingredientsSlice);
+// console.log(ingredientsSlice);
 // export ingredientsSlice;

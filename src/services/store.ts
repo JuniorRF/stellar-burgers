@@ -1,5 +1,5 @@
 import { configureStore, combineSlices } from '@reduxjs/toolkit';
-import { ingredientsSlice } from './slices/ingredients';
+import { ingredientsSlice } from './slices/ingredientsSlice';
 
 import {
   TypedUseSelectorHook,

@@ -1,7 +1,6 @@
 export {
-	ingredientsSlice,
+  ingredientsSlice,
   getIngredients,
   ingredientstIsLoading,
   IngredientsThunk
-} from './ingredients';
-
+} from './ingredientsSlice';
