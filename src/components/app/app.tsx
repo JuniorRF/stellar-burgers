@@ -11,24 +11,37 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
-import { AppHeader, OrderInfo } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
-const App = () => (
+const App = () => {
   // const location = useLocation();
   // console.log(location);
-  <BrowserRouter>
+  const navigate = useNavigate();
+
+  const handleOnClose = (): void => {
+    navigate(-1);
+  };
+  return (
     <div className={styles.app}>
       <AppHeader />
       <Routes>
         <Route path='*' element={<NotFound404 />} />
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <Modal title={'Детали ингредиента'} onClose={handleOnClose}>
+              <IngredientDetails />
+            </Modal>
+          }
+        />
       </Routes>
     </div>
-  </BrowserRouter>
-);
+  );
+};
 export default App;
 
 {
