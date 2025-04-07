@@ -1,29 +1,62 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '@utils-types';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
-interface IngredientsState {
-  constructorIngredients: TConstructorIngredient[];
-}
+type IngredientsState = {
+  constructor: {
+    bun: TConstructorIngredient | null;
+    ingredients: TConstructorIngredient[];
+  };
+};
 
 const initialState: IngredientsState = {
-  constructorIngredients: [],
+  constructor: {
+    bun: null,
+    ingredients: []
+  }
 };
 
 export const constructorSlice = createSlice({
   name: 'constructorIngredients',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
-    state.constructorIngredients.push(action.payload);
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.constructor.bun = action.payload;
+        } else {
+          state.constructor.ingredients.push(action.payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const id = nanoid();
+        return { payload: { ...ingredient, id } };
+      }
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
-    state.constructorIngredients = state.constructorIngredients.filter(b => b.id !== action.payload);
+      state.constructor.ingredients = state.constructor.ingredients.filter(
+        (ingredient) => ingredient.id !== action.payload
+      );
+    },
+    moveUp: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+      const temp = state.constructor.ingredients[index];
+      state.constructor.ingredients[index] =
+        state.constructor.ingredients[index - 1];
+      state.constructor.ingredients[index - 1] = temp;
+    },
+    moveDown: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+      const temp = state.constructor.ingredients[index];
+      state.constructor.ingredients[index] =
+        state.constructor.ingredients[index + 1];
+      state.constructor.ingredients[index + 1] = temp;
     }
   },
   selectors: {
-    getConstructorIngredients: (state) => state.constructorIngredients
+    getConstructorIngredients: (state) => state
   }
 });
 
-export const { addIngredient, removeIngredient } = constructorSlice.actions;
+export const { addIngredient, removeIngredient, moveUp, moveDown } =
+  constructorSlice.actions;
 export const { getConstructorIngredients } = constructorSlice.selectors;

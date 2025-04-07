@@ -6,8 +6,10 @@ export {
 } from './ingredientsSlice';
 
 export {
-  orderIngredientsSlice,
+  constructorSlice,
   addIngredient,
   removeIngredient,
-  getOrderIngredients
+  getConstructorIngredients,
+  moveUp,
+  moveDown
 } from './constructorSlice';
