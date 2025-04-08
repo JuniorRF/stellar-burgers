@@ -14,11 +14,20 @@ import styles from './app.module.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { useEffect } from 'react';
+import { useAppDispatch } from '@app-store';
+import { FeedsThunk, IngredientsThunk } from '@slices';
 
 const App = () => {
+  const dispatch = useAppDispatch();
   // const location = useLocation();
   // console.log(location);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(IngredientsThunk());
+    dispatch(FeedsThunk());
+  }, []);
 
   const handleOnClose = (): void => {
     navigate(-1);

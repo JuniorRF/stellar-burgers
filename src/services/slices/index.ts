@@ -1,15 +1,4 @@
-export {
-  ingredientsSlice,
-  getIngredients,
-  ingredientstIsLoading,
-  IngredientsThunk
-} from './ingredientsSlice';
-
-export {
-  constructorSlice,
-  addIngredient,
-  removeIngredient,
-  getConstructorIngredients,
-  moveUp,
-  moveDown
-} from './constructorSlice';
+export * from './ingredientsSlice';
+export * from './constructorSlice';
+export * from './feedSlice';
+export * from './userSlice';

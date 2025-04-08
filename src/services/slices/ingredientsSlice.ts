@@ -38,7 +38,7 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(IngredientsThunk.rejected, (state, action) => {
         state.loading = false;
-        console.log(state, action);
+        console.error(state, action);
       });
   },
   selectors: {
@@ -49,5 +49,3 @@ export const ingredientsSlice = createSlice({
 
 export const { getIngredients, ingredientstIsLoading } =
   ingredientsSlice.selectors;
-// console.log(ingredientsSlice);
-// export ingredientsSlice;
