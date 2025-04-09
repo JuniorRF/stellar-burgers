@@ -8,7 +8,9 @@ import {
   resetPasswordApi,
   getUserApi,
   updateUserApi,
-  logoutApi
+  logoutApi,
+  TRegisterData,
+  TLoginData
 } from '@api';
 
 const initialState: TUser = {
@@ -17,21 +19,21 @@ const initialState: TUser = {
 };
 
 export const registerUser = createAsyncThunk(
-    'user/registerUser',
-    async (data) => await registerUserApi(data)
-  );
+  'user/registerUser',
+  async (data: TRegisterData) => await registerUserApi(data)
+);
 
-  export const loginUser = createAsyncThunk(
-    'user/loginUser',
-    async (data) => await loginUserApi(data)
-  );
+export const loginUser = createAsyncThunk(
+  'user/loginUser',
+  async (data: TLoginData) => await loginUserApi(data)
+);
 
-  export const logoutUser = createAsyncThunk(
-    'user/logoutUser',
-    async () => await logoutApi()
-  );
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  async () => await logoutApi()
+);
 
-  export const updateUser = createAsyncThunk(
-    'user/updateUser',
-    async (data) => await updateUserApi(data)
-  );
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (data: TRegisterData) => await updateUserApi(data)
+);
