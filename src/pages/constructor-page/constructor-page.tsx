@@ -1,14 +1,13 @@
 import { useAppSelector, useAppDispatch } from '@app-store';
-import { ingredientstIsLoading } from '@slices';
+import { IngredientsThunk, ingredientstIsLoading } from '@slices';
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 export const ConstructorPage: FC = () => {
-  const dispatch = useAppDispatch();
   const isIngredientsLoading = useAppSelector(ingredientstIsLoading);
 
   return (

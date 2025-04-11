@@ -1,13 +1,15 @@
-import { useAppSelector } from '@app-store';
-import { getEmail, getName } from '@slices';
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useAppSelector } from '@app-store';
+import { getEmail, getName } from '@slices';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
+  const userName = useAppSelector(getName);
+  const userEmail = useAppSelector(getEmail);
   const user = {
-    name: useAppSelector(getName),
-    email: useAppSelector(getEmail)
+    name: userName,
+    email: userEmail
   };
 
   const [formValue, setFormValue] = useState({
@@ -47,7 +49,6 @@ export const Profile: FC = () => {
       ...prevState,
       [e.target.name]: e.target.value
     }));
-    console.log('нейзвестная кнопка');
   };
 
   return (
@@ -59,6 +60,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

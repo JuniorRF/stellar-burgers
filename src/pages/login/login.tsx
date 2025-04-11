@@ -6,9 +6,8 @@ import { login } from '@slices';
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const dispatch = useAppDispatch();
   const handleSubmit = (e: SyntheticEvent) => {
-    const dispatch = useAppDispatch();
     e.preventDefault();
     dispatch(login({ email, password }));
   };
