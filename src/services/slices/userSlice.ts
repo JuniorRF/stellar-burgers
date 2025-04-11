@@ -14,9 +14,14 @@ import {
   TLoginData
 } from '@api';
 
-const initialState: TUser = {
+type TUserSlice = TUser & {
+  checkUser: boolean;
+};
+
+const initialState: TUserSlice = {
   email: '',
-  name: ''
+  name: '',
+  checkUser: false
 };
 
 export const getUser = createAsyncThunk(
@@ -47,7 +52,11 @@ export const updateUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserCheck: (state) => {
+      state.checkUser = true;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, action) => {
@@ -83,12 +92,21 @@ export const userSlice = createSlice({
       })
       .addCase(logout.rejected, (state, action) => {
         console.error(state, action);
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.email = action.payload.user.email;
+        state.name = action.payload.user.name;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        console.error(state, action);
       });
   },
   selectors: {
     getName: (state) => state.name,
-    getEmail: (state) => state.email
+    getEmail: (state) => state.email,
+    getChekuser: (state) => state.checkUser
   }
 });
 
-export const { getName, getEmail } = userSlice.selectors;
+export const { getName, getEmail, getChekuser } = userSlice.selectors;
+export const { setUserCheck } = userSlice.actions;

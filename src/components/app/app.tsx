@@ -22,7 +22,7 @@ import {
 } from '@components';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@app-store';
-import { FeedsThunk, getUser, IngredientsThunk } from '@slices';
+import { FeedsThunk, getUser, IngredientsThunk, setUserCheck } from '@slices';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -31,9 +31,12 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getUser());
     dispatch(IngredientsThunk());
     dispatch(FeedsThunk());
+    dispatch(getUser())
+      .unwrap()
+      .catch(() => {})
+      .finally(dispatch(() => setUserCheck));
   }, []);
 
   const handleOnClose = (): void => {
@@ -46,21 +49,6 @@ const App = () => {
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='*' element={<NotFound404 />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route
-          path='/profile'
-          element={
-            <ProtectedRouter>
-              <Profile />
-            </ProtectedRouter>
-          }
-        />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
-      </Routes>
-      <Routes>
         <Route
           path='/ingredients/:id'
           element={
@@ -75,6 +63,54 @@ const App = () => {
             <Modal title={'Заказ'} onClose={handleOnClose}>
               <OrderInfo />
             </Modal>
+          }
+        />
+        <Route
+          path='/login'
+          element={
+            <ProtectedRouter isPublic>
+              <Login />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRouter>
+              <Profile />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <ProtectedRouter isPublic>
+              <Register />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <ProtectedRouter>
+              <ForgotPassword />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <ProtectedRouter>
+              <ResetPassword />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path='/profile/orders'
+          element={
+            <ProtectedRouter>
+              <ProfileOrders />
+            </ProtectedRouter>
           }
         />
       </Routes>
