@@ -14,10 +14,10 @@ const initialState: IngredientsState = {
   }
 };
 
-export const FeedsThunk = createAsyncThunk('feeds/getAll', async () => {
-  const response = await getFeedsApi();
-  return response;
-});
+export const FeedsThunk = createAsyncThunk(
+  'feeds/getAll',
+  async () => await getFeedsApi()
+);
 
 export const feedSlice = createSlice({
   name: 'feeds',

@@ -114,6 +114,24 @@ const App = () => {
           }
         />
       </Routes>
+      <Routes>
+        <Route
+          path='/ingredients/:id'
+          element={
+            <Modal title={'Ингридиент'} onClose={handleOnClose}>
+              <IngredientDetails />
+            </Modal>
+          }
+        />
+        <Route
+          path='/feed/:number'
+          element={
+            <Modal title={'Заказ'} onClose={handleOnClose}>
+              <OrderInfo />
+            </Modal>
+          }
+        />
+      </Routes>
     </div>
   );
 };

@@ -1,19 +1,34 @@
-import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { orderBurgerApi } from '@api';
+import {
+  createAsyncThunk,
+  createSlice,
+  nanoid,
+  PayloadAction
+} from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 type IngredientsState = {
   constructor: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
   };
+  buyBurgerStatus: boolean;
+  orderData: TOrder | null;
 };
 
 const initialState: IngredientsState = {
   constructor: {
     bun: null,
     ingredients: []
-  }
+  },
+  buyBurgerStatus: false,
+  orderData: null
 };
+
+export const BuyBurgerThunk = createAsyncThunk(
+  'feeds/buyBurger',
+  async (data: string[]) => await orderBurgerApi(data)
+);
 
 export const constructorSlice = createSlice({
   name: 'constructorIngredients',
@@ -50,13 +65,40 @@ export const constructorSlice = createSlice({
       state.constructor.ingredients[index] =
         state.constructor.ingredients[index + 1];
       state.constructor.ingredients[index + 1] = temp;
+    },
+    clearConstructor: (state) => {
+      state.orderData = null;
+      state.constructor.bun = null;
+      state.constructor.ingredients = [];
     }
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(BuyBurgerThunk.pending, (state) => {
+        state.buyBurgerStatus = true;
+      })
+      .addCase(BuyBurgerThunk.fulfilled, (state, action) => {
+        state.buyBurgerStatus = false;
+        state.orderData = action.payload.order;
+      })
+      .addCase(BuyBurgerThunk.rejected, (state, action) => {
+        state.buyBurgerStatus = false;
+        console.error(state, action);
+      });
+  },
   selectors: {
-    getConstructorIngredients: (state) => state
+    getConstructorIngredients: (state) => state.constructor,
+    getStatusBuyBurger: (state) => state.buyBurgerStatus,
+    getOrderData: (state) => state.orderData
   }
 });
 
-export const { addIngredient, removeIngredient, moveUp, moveDown } =
-  constructorSlice.actions;
-export const { getConstructorIngredients } = constructorSlice.selectors;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveUp,
+  moveDown,
+  clearConstructor
+} = constructorSlice.actions;
+export const { getConstructorIngredients, getStatusBuyBurger, getOrderData } =
+  constructorSlice.selectors;
