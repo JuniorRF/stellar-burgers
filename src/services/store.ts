@@ -3,7 +3,8 @@ import {
   ingredientsSlice,
   constructorSlice,
   feedSlice,
-  userSlice
+  userSlice,
+  ordersSlice
 } from '@slices';
 
 import {
@@ -16,7 +17,8 @@ const rootReducer = combineSlices(
   ingredientsSlice,
   constructorSlice,
   feedSlice,
-  userSlice
+  userSlice,
+  ordersSlice
 );
 
 const store = configureStore({

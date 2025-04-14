@@ -27,8 +27,9 @@ import { FeedsThunk, getUser, IngredientsThunk, setUserCheck } from '@slices';
 const App = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const background = location.state?.background;
+  const backgroundLocation = location.state?.background;
   const navigate = useNavigate();
+  console.log(location, backgroundLocation);
 
   useEffect(() => {
     dispatch(IngredientsThunk());
@@ -37,6 +38,7 @@ const App = () => {
       .unwrap()
       .catch(() => {})
       .finally(dispatch(() => setUserCheck));
+    // dispatch(userOrdersThunk());
   }, []);
 
   const handleOnClose = (): void => {
@@ -45,26 +47,13 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes location={background || location}>
+      <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='*' element={<NotFound404 />} />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title={'Ингридиент'} onClose={handleOnClose}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title={'Заказ'} onClose={handleOnClose}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path='/profile/orders/:number' element={<OrderInfo />} />
         <Route
           path='/login'
           element={
@@ -114,25 +103,38 @@ const App = () => {
           }
         />
       </Routes>
-      <Routes>
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title={'Ингридиент'} onClose={handleOnClose}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title={'Заказ'} onClose={handleOnClose}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-      </Routes>
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title={'Ингридиент'} onClose={handleOnClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title={'Заказ'} onClose={handleOnClose}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRouter>
+                <Modal title={'Заказ'} onClose={handleOnClose}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRouter>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
+
 export default App;
