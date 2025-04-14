@@ -14,16 +14,16 @@ export function ProtectedRouter({ children, isPublic }: ProtectedRouterProps) {
   const userCheck = useAppSelector(getChekUser);
 
   if (!userCheck) {
-    <Preloader />;
+    return <Preloader />;
+  }
+
+  if (!isPublic && !user) {
+    return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
   if (isPublic && user) {
     const from = location.state?.from || { pathname: '/' };
     return <Navigate replace to={from} />;
-  }
-
-  if (!isPublic && !user) {
-    return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
   return children;
