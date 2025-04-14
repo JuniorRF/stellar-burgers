@@ -12,7 +12,7 @@ export function ProtectedRouter({ children, isPublic }: ProtectedRouterProps) {
   const location = useLocation();
   const user = useAppSelector(getName);
   const userCheck = useAppSelector(getChekUser);
-  console.log(user);
+
   if (!userCheck) {
     <Preloader />;
   }

@@ -29,7 +29,6 @@ const App = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.background;
   const navigate = useNavigate();
-  console.log(location, backgroundLocation);
 
   useEffect(() => {
     dispatch(IngredientsThunk());
@@ -80,7 +79,7 @@ const App = () => {
         <Route
           path='/forgot-password'
           element={
-            <ProtectedRouter>
+            <ProtectedRouter isPublic>
               <ForgotPassword />
             </ProtectedRouter>
           }
