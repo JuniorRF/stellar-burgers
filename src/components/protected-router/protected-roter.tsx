@@ -1,5 +1,5 @@
 import { useAppSelector } from '@app-store';
-import { getChekuser, getName } from '@slices';
+import { getChekUser, getName } from '@slices';
 import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -10,9 +10,9 @@ type ProtectedRouterProps = {
 
 export function ProtectedRouter({ children, isPublic }: ProtectedRouterProps) {
   const location = useLocation();
-  const userCheck = useAppSelector(getChekuser);
   const user = useAppSelector(getName);
-
+  const userCheck = useAppSelector(getChekUser);
+  console.log(user);
   if (!userCheck) {
     <Preloader />;
   }
