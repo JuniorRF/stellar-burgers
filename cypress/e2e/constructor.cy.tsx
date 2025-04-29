@@ -70,5 +70,9 @@ describe('Оформление заказа', function() {
         cy.get('[data-cy=modal]')
             .contains('123456')
             .should('exist')
+        cy.get('[data-cy=modal] button').click()
+        cy.get('[data-cy=modal]').should('not.exist')
+        cy.contains('Выберите булки').should('exist')
+        cy.contains('Выберите начинку').should('exist')
     });
 });
