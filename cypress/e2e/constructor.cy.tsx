@@ -1,7 +1,7 @@
 describe('Модальные окна', function() {
     beforeEach(() => {
         cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients' });
-        cy.visit('http://localhost:4000');
+        cy.visit('/');
     });
     it('Открытие модального окна', function() {
         cy.get('[data-cy=bun1]').click();
@@ -24,7 +24,7 @@ describe('Модальные окна', function() {
 describe('Добавление ингредиентов', function() {
     beforeEach(() => {
         cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients' });
-        cy.visit('http://localhost:4000');
+        cy.visit('/');
     });
     it('Добавление Булки в конструктор', function() {
         cy.get('[data-cy=bun1]').contains('Добавить').click();
@@ -56,7 +56,7 @@ describe('Оформление заказа', function() {
         cy.intercept("POST", "api/orders", { fixture: "order-response"})
         window.localStorage.setItem('refreshToken', JSON.stringify('testRefreshToken'))
         cy.setCookie('accessToken', 'testAccessToken')
-        cy.visit('http://localhost:4000');
+        cy.visit('/');
     });
     this.afterEach(() => {
         cy.clearCookies();
