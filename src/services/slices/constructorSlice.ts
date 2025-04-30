@@ -102,3 +102,4 @@ export const {
 } = constructorSlice.actions;
 export const { getConstructorIngredients, getStatusBuyBurger, getOrderData } =
   constructorSlice.selectors;
+export { initialState as initialStateConstructor };

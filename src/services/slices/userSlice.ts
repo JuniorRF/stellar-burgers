@@ -107,3 +107,4 @@ export const userSlice = createSlice({
 
 export const { getName, getEmail, getChekUser } = userSlice.selectors;
 export const { setUserCheck } = userSlice.actions;
+export { initialState as initialStateUser };

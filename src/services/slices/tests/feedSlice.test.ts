@@ -1,15 +1,7 @@
-import { feedSlice, FeedsThunk } from '@slices';
-import { testOrder1, testOrder2 } from './fixtures'
+import { feedSlice, FeedsThunk, initialStateFeeds } from '@slices';
+import { testOrder1, testOrder2 } from './fixtures';
 
 describe('Слайс заказов', () => {
-  const initialState = {
-    feeds: {
-      orders: [],
-      total: 0,
-      totalToday: 0
-    }
-  };
-
   describe('Ассинхронный редюсер', () => {
     it('Состояние: fulfilled', () => {
       const mockFeeds = {
@@ -18,16 +10,19 @@ describe('Слайс заказов', () => {
         totalToday: 2
       };
       const action = { type: FeedsThunk.fulfilled.type, payload: mockFeeds };
-      const nextState = feedSlice.reducer(initialState, action);
+      const nextState = feedSlice.reducer(initialStateFeeds, action);
 
       expect(nextState.feeds).toEqual(mockFeeds);
     });
 
     it('Состояние: rejected', () => {
-      const action = { type: FeedsThunk.rejected.type, error: { message: 'Error occurred' } };
-      const nextState = feedSlice.reducer(initialState, action);
+      const action = {
+        type: FeedsThunk.rejected.type,
+        error: { message: 'Error occurred' }
+      };
+      const nextState = feedSlice.reducer(initialStateFeeds, action);
 
-      expect(nextState.feeds).toEqual(initialState.feeds);
+      expect(nextState.feeds).toEqual(initialStateFeeds.feeds);
     });
   });
 });
