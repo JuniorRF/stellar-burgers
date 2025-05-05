@@ -42,3 +42,4 @@ export const ordersSlice = createSlice({
 });
 
 export const { isload, getUserOrders } = ordersSlice.selectors;
+export { initialState as initialStateOrder };

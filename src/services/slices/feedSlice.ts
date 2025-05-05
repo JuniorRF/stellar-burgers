@@ -40,3 +40,4 @@ export const feedSlice = createSlice({
 });
 
 export const { getOrders, getTotal, getTotalToday } = feedSlice.selectors;
+export { initialState as initialStateFeeds };
